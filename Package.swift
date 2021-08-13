@@ -8,6 +8,7 @@ let package = Package(
   platforms: [.macOS("11.0")],
   products: [
     .library(name: "APIBuilder", targets: ["APIBuilder"]),
+    .library(name: "APIBuilderTestHelpers", targets: ["TestHelpers"]),
   ],
   dependencies: [
     .package(url: "https://github.com/sergiocampama/WebLinking", .branch("main")),
