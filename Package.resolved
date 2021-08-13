@@ -1,0 +1,25 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "swift-nio",
+        "repositoryURL": "https://github.com/apple/swift-nio.git",
+        "state": {
+          "branch": null,
+          "revision": "9a992ee3de1f8da9f2968fc96b26714834f3105f",
+          "version": "2.31.1"
+        }
+      },
+      {
+        "package": "WebLinking",
+        "repositoryURL": "https://github.com/sergiocampama/WebLinking",
+        "state": {
+          "branch": "main",
+          "revision": "a5fc2ce2d17bacd037efc9ef4bfa5ecf7913128d",
+          "version": null
+        }
+      }
+    ]
+  },
+  "version": 1
+}
