@@ -22,8 +22,8 @@ public struct Response: Equatable {
 public protocol RequestExecutor {
     func execute(_ request: URLRequest) -> EventLoopFuture<Response>
 
-    #if swift(>=5.5)
-    @available(swift 5.5)
+    #if swift(>=5.6)
+    @available(swift 5.6)
     @available(macOS 12.0, *)
     func execute(_ request: URLRequest) async throws -> Response
     #endif

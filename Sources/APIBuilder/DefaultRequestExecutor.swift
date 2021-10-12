@@ -29,11 +29,11 @@ public class DefaultRequestExecutor: RequestExecutor {
         return promise.futureResult
     }
 
-    #if swift(>=5.5)
-    @available(swift 5.5)
+    #if swift(>=5.6)
+    @available(swift 5.6)
     @available(macOS 12.0, *)
     public func execute(_ request: URLRequest) async throws -> Response {
-        let (data, response) = try await urlSession.data(for: request)
+        let (data, response) = try await urlSession.data(for: request) as (Data, URLResponse)
         guard let httpResponse = response as? HTTPURLResponse else {
             throw StringError("Unknown error")
         }

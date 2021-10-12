@@ -45,8 +45,8 @@ public class APIProvider {
         }
     }
 
-    #if swift(>=5.5)
-    @available(swift 5.5)
+    #if swift(>=5.6)
+    @available(swift 5.6)
     @available(macOS 12.0, *)
     public func asyncRequest(_ endpoint: APIEndpoint<Void>) async throws {
         let request = requestForEndpoint(endpoint)
@@ -54,7 +54,7 @@ public class APIProvider {
         try validate(response: response)
     }
 
-    @available(swift 5.5)
+    @available(swift 5.6)
     @available(macOS 12.0, *)
     public func asyncRequest<T: Codable>(_ endpoint: APIEndpoint<T>) async throws -> T {
         let request = requestForEndpoint(endpoint)
@@ -62,7 +62,7 @@ public class APIProvider {
         return try unpack(response: response)
     }
 
-    @available(swift 5.5)
+    @available(swift 5.6)
     @available(macOS 12.0, *)
     public func asyncRequest<T: Codable>(
       _ endpoint: APIEndpoint<Paged<T>>

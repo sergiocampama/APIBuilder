@@ -57,8 +57,8 @@ final class ProviderTests: XCTestCase {
         XCTAssertEqual(response, expectedMessage)
     }
 
-    #if swift(>=5.5)
-    @available(swift 5.5)
+    #if swift(>=5.6)
+    @available(swift 5.6)
     @available(macOS 12.0, *)
     func testAsyncDataRequest() async throws {
         let expectedMessage = SomeCodable(message: "hello, world!")
