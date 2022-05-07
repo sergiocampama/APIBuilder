@@ -1,30 +1,23 @@
 import Foundation
-import NIO
 
 #if canImport(FoundationNetworking)
 import FoundationNetworking
 #endif
 
 public struct Response: Equatable {
-    public let httpResponse: HTTPURLResponse
-    public let data: Data
+  public let httpResponse: HTTPURLResponse
+  public let data: Data
 
-    public init(httpResponse: HTTPURLResponse, data: Data) {
-        self.httpResponse = httpResponse
-        self.data = data
-    }
+  public init(httpResponse: HTTPURLResponse, data: Data) {
+    self.httpResponse = httpResponse
+    self.data = data
+  }
 
-    var statusCode: Int {
-        httpResponse.statusCode
-    }
+  var statusCode: Int {
+    httpResponse.statusCode
+  }
 }
 
 public protocol RequestExecutor {
-    func execute(_ request: URLRequest) -> EventLoopFuture<Response>
-
-    #if swift(>=5.6)
-    @available(swift 5.6)
-    @available(macOS 12.0, *)
-    func execute(_ request: URLRequest) async throws -> Response
-    #endif
+  func execute(_ request: URLRequest) async throws -> Response
 }

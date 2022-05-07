@@ -5,22 +5,20 @@ import PackageDescription
 
 let package = Package(
   name: "APIBuilder",
-  platforms: [.macOS("11.0")],
+  platforms: [.macOS("12.0")],
   products: [
     .library(name: "APIBuilder", targets: ["APIBuilder"]),
     .library(name: "APIBuilderTestHelpers", targets: ["TestHelpers"]),
   ],
   dependencies: [
     .package(url: "https://github.com/sergiocampama/WebLinking", .branch("main")),
-    .package(url: "https://github.com/apple/swift-nio.git", from: "2.30.0"),
   ],
   targets: [
     .target(
-        name: "APIBuilder",
-        dependencies: [
-            .product("WebLinking", "WebLinking"),
-            .product("swift-nio", "NIO"),
-        ]
+      name: "APIBuilder",
+      dependencies: [
+        .product("WebLinking", "WebLinking"),
+      ]
     ),
 
     .target(name: "TestHelpers", dependencies: ["APIBuilder"]),
