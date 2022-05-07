@@ -1,5 +1,4 @@
 import Foundation
-@_implementationOnly import WebLinking
 
 #if canImport(FoundationNetworking)
 import FoundationNetworking

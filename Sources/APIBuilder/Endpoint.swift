@@ -62,6 +62,17 @@ public struct APIEndpointBuilder<T> {
   }
 
   public static func buildBlock(
+    _ path: String,
+    _ method: HTTPMethod
+  ) -> APIEndpoint<T> {
+    return APIEndpoint(
+      path: path,
+      method: method,
+      parameters: nil
+    )
+  }
+
+  public static func buildBlock(
     _ path: String
   ) -> APIEndpoint<T> {
     return APIEndpoint(

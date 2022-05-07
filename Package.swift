@@ -10,15 +10,10 @@ let package = Package(
     .library(name: "APIBuilder", targets: ["APIBuilder"]),
     .library(name: "APIBuilderTestHelpers", targets: ["TestHelpers"]),
   ],
-  dependencies: [
-    .package(url: "https://github.com/sergiocampama/WebLinking", .branch("main")),
-  ],
+  dependencies: [],
   targets: [
     .target(
-      name: "APIBuilder",
-      dependencies: [
-        .product("WebLinking", "WebLinking"),
-      ]
+      name: "APIBuilder"
     ),
 
     .target(name: "TestHelpers", dependencies: ["APIBuilder"]),
