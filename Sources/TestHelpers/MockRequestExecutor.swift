@@ -6,15 +6,15 @@ import FoundationNetworking
 #endif
 
 public class MockRequestExecutor: RequestExecutor {
-    public let expectedResult: Result<Response, Error>
+  public let expectedResult: Result<Response, Error>
 
-    public init(expectedResult: Result<Response, Error>) {
-      self.expectedResult = expectedResult
-    }
+  public init(expectedResult: Result<Response, Error>) {
+    self.expectedResult = expectedResult
+  }
 
-    public func execute(_ request: URLRequest) async throws -> Response {
-      return try expectedResult.get()
-    }
+  public func execute(_ request: URLRequest) async throws -> Response {
+    return try expectedResult.get()
+  }
 }
 
 extension Response {

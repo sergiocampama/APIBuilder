@@ -25,7 +25,7 @@ final class ProviderTests: XCTestCase {
   func testBasicEndpointRequest() throws {
     let endpoint = APIEndpoint<SomeCodable>(path: "/someResource")
     let apiProvider = APIProvider(configuration: configuration)
-    let urlRequest = apiProvider.requestForEndpoint(endpoint)
+    let urlRequest = try apiProvider.requestForEndpoint(endpoint)
     XCTAssertEqual(urlRequest.url?.absoluteString, "https://some.api.com/someResource")
     XCTAssertEqual(urlRequest.httpMethod, "GET")
   }
@@ -34,17 +34,55 @@ final class ProviderTests: XCTestCase {
     let endpoint = APIEndpoint<SomeCodable>(
       path: "/someResource",
       method: .post,
-      parameters: ["query": "item"],
-      body: Data([1, 2, 3]),
-      contentType: "application/octet-stream"
+      parameters: ["query": "item"]
     )
 
     let apiProvider = APIProvider(configuration: configuration)
-    let urlRequest = apiProvider.requestForEndpoint(endpoint)
+    let urlRequest = try apiProvider.requestForEndpoint(
+      endpoint,
+      body: Data([1, 2, 3]),
+      contentType: "application/octet-stream"
+    )
     XCTAssertEqual(urlRequest.url?.absoluteString, "https://some.api.com/someResource?query=item")
     XCTAssertEqual(urlRequest.httpMethod, "POST")
     XCTAssertEqual(urlRequest.httpBody, Data([1, 2, 3]))
     XCTAssertEqual(urlRequest.value(forHTTPHeaderField: "Content-Type"), "application/octet-stream")
+  }
+
+  func testEncodableBodyRequest() throws {
+    let endpoint = APIEndpoint<SomeCodable>(
+      path: "/someResource",
+      method: .post,
+      parameters: ["query": "item"]
+    )
+
+    let someMessage = SomeCodable(message: "1")
+
+    let apiProvider = APIProvider(configuration: configuration)
+    let urlRequest = try apiProvider.requestForEndpoint(
+      endpoint,
+      body: someMessage
+    )
+    XCTAssertEqual(urlRequest.url?.absoluteString, "https://some.api.com/someResource?query=item")
+    XCTAssertEqual(urlRequest.httpMethod, "POST")
+    XCTAssertEqual(urlRequest.httpBody, "{\"message\":\"1\"}".data(using: .utf8))
+    XCTAssertEqual(urlRequest.value(forHTTPHeaderField: "Content-Type"), "application/json")
+  }
+
+  func testAdditionalParametersRequest() throws {
+    let endpoint = APIEndpoint<SomeCodable>(
+      path: "/someResource",
+      method: .get,
+      parameters: ["query": "item"]
+    )
+
+    let apiProvider = APIProvider(configuration: configuration)
+    let urlRequest = try apiProvider.requestForEndpoint(
+      endpoint,
+      parameters: ["query": "item2"]
+    )
+    XCTAssertEqual(urlRequest.url?.absoluteString, "https://some.api.com/someResource?query=item2")
+    XCTAssertEqual(urlRequest.httpMethod, "GET")
   }
 
   func testConfiguration() throws {
@@ -54,7 +92,7 @@ final class ProviderTests: XCTestCase {
     )
     let endpoint = APIEndpoint<SomeCodable>(path: "/someResource")
     let apiProvider = APIProvider(configuration: configuration)
-    let urlRequest = apiProvider.requestForEndpoint(endpoint)
+    let urlRequest = try apiProvider.requestForEndpoint(endpoint)
     XCTAssertEqual(urlRequest.url?.absoluteString, "https://some.api.com/someResource")
     XCTAssertEqual(urlRequest.httpMethod, "GET")
     XCTAssertEqual(urlRequest.value(forHTTPHeaderField: "Authorization"), "my_api_token")
